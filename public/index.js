@@ -6,12 +6,22 @@ const line_thickness = 2
 function drawDataIntoCanvas(canvas, data) {
     const ctx = canvas.getContext("2d");
     // set canvas
-    canvas.width = Math.max(data.length * line_thickness, 100);
-    canvas.height = 100;
+    let width = Math.max(data.length * line_thickness, 100), height = 100
+
     // change width if width is too big
     const parentWidth = canvas.parentNode.offsetWidth, brotherWidth = canvas.parentNode.childNodes[0].offsetWidth;
-    if(parentWidth - brotherWidth - 50 < canvas.width) {
-        canvas.width = parentWidth - brotherWidth - 50
+    const parentHeight = canvas.parentNode.offsetWidth;
+    if(parentWidth - brotherWidth - 50 < width) {
+        width = parentWidth - brotherWidth - 50
+    }
+    if(parentHeight < height) {
+        height = parentHeight
+    }
+    if(canvas.width != width){
+        canvas.width = width
+    }
+    if(canvas.height != height){
+        canvas.height = height
     }
     // set max latency
     const max_latency = Math.max(...data, graph_max_value)
