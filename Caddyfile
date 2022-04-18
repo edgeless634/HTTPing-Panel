@@ -1,0 +1,13 @@
+{
+    admin off
+}
+
+# httping panel
+http://127.0.0.1:8001 {
+    # strip '/api' in uri
+    handle_path /api* {
+        reverse_proxy 127.0.0.1:9001
+    }
+    root * {$PWD}/public/
+    file_server
+}

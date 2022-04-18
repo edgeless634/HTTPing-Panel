@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTPing Panel</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <main class="app main-area">
+        <h1>HTTPing Panel</h1>
+        <div class="things">
+            <div class="thing" v-for="data in datas">
+                <div class="data-text">
+                    <p class="data-name">{{data.name}}</p>
+                    <p class="data-url">{{data.url}}</p>
+                    <button class="delete-button" v-on:click="deleteSite" v-bind:target="data.name">Delete</button>
+                </div>
+                <canvas class="canvas-datas" v-bind:data="data.data"></canvas>
+            </div>
+        </div>
+        <div class="add-area">
+            <div class="input-with-text">
+                <p>Name</p>
+                <input type="text" name="name" v-model="name" placeholder="百度">
+            </div>
+            <div class="input-with-text">
+                <p>Url</p>
+                <input type="text" name="url" v-model="url" placeholder="baidu.com or https://baidu.com">
+            </div>
+            <button class="add-button" v-on:click="addSite">Add</button>
+        </div>
+    </main>
+    <script src="https://unpkg.com/vue@3.2.31"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./index.js"></script>
+</body>
+</html>

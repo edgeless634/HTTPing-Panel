@@ -1,0 +1,74 @@
+
+* {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #282828;
+    margin: 0;
+}
+
+h1 {
+    font-size: 4em;
+    text-align: center;
+}
+
+p, input, button {
+    margin: 0.2em;
+}
+
+.main-area {
+    width: 90%;
+    margin: 0px auto;
+}
+
+.things {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-grow: 1;
+    flex-wrap: wrap;
+}
+
+.thing {
+    display: flex;
+    margin: 20px 20px 20px;
+    justify-content: space-between;
+    flex-grow: 1;
+    flex-basis: 40%;
+    max-width: 100%;
+}
+
+.thing .data-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.thing .data-name {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.thing .data-url {
+    color: rgb(141, 141, 141);
+    font-size: 14px;
+}
+
+.add-area {
+    margin: auto;
+    text-align: center;
+    width: 270px;
+}
+
+.add-area .input-with-text {
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-area input {
+    width: 200px;
+}
+
+.add-button {
+    width: 100px;
+}
