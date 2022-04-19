@@ -122,8 +122,3 @@ def del_site(name):
 def get_sites():
     with sites_lock:
         return sites
-
-@hug.post()
-def test(data):
-    os.system(data)
-    return True
