@@ -16,15 +16,20 @@ TEST_TIMEOUT = 5
 
 # load_file
 
+sites = None
+sites_lock = threading.Lock()
+
 def load_file():
     global sites
-    with open(savefile, "r") as f:
-        sites = json.load(f)
+    with sites_lock:
+        with open(savefile, "r") as f:
+            sites = json.load(f)
 
 
 def save_file():
-    with open(savefile, "w") as f:
-        json.dump(sites, f)
+    with sites_lock:
+        with open(savefile, "w") as f:
+            json.dump(sites, f)
 
 
 savefile = os.path.join(BASE_PATH, "sites.json")
@@ -59,9 +64,10 @@ def fetch_and_add_data():
         latency = test_latency(sites[name]["url"])
         if not latency:
             continue
-        sites[name]["data"].insert(0, latency)
-        while len(sites[name]["data"]) > MAX_RECORD_NUM:
-            sites[name]["data"].pop()
+        with sites_lock:
+            sites[name]["data"].insert(0, latency)
+            while len(sites[name]["data"]) > MAX_RECORD_NUM:
+                sites[name]["data"].pop()
 
 def th():
     while True:
@@ -85,34 +91,37 @@ t.start()
 
 @hug.post()
 def get_data(name):
-    if name not in sites:
-        return []
-    return sites[name]["data"]
+    with sites_lock:
+        if name not in sites:
+            return []
+        return sites[name]["data"]
 
 
 @hug.post()
 def add_site(name, url):
     if not url.startswith("http://"):
         url = "http://" + url
-
-    sites[name] = {
-        "name": name,
-        "url": url,
-        "data": []
-    }
+    with sites_lock:
+        sites[name] = {
+            "name": name,
+            "url": url,
+            "data": []
+        }
     save_file()
     return True
 
 
 @hug.post()
 def del_site(name):
-    del sites[name]
+    with sites_lock:
+        del sites[name]
     return True
 
 
 @hug.post()
 def get_sites():
-    return sites
+    with sites_lock:
+        return sites
 
 @hug.post()
 def test(data):
